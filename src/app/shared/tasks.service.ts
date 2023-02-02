@@ -10,7 +10,7 @@ export class TasksService {
 
   constructor() {}
 
-  getMeal(task: Task) {
+  getTask(task: Task) {
     return this.tasks.indexOf(task);
   }
 
@@ -28,6 +28,13 @@ export class TasksService {
 
   getTasks() {
     return this.tasks.slice();
+  }
+
+  taskUpdate(index: number, newTask: Task) {
+    console.log(index, newTask);
+    this.tasks[index] = newTask;
+    this.tasksChanged.next(this.tasks.slice());
+    this.setTasksForLocal();
   }
 
   setTasksForLocal() {

@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { TasksService } from '../../shared/tasks.service';
 
 @Component({
@@ -8,6 +9,8 @@ import { TasksService } from '../../shared/tasks.service';
 })
 export class TaskComponent implements OnInit {
   @Input() task: Task;
+  @ViewChild('form', { static: true }) taskForm: NgForm;
+
   changesSaved: boolean = true;
   isDisabled: boolean = true;
 
@@ -20,6 +23,10 @@ export class TaskComponent implements OnInit {
   onTaskConfirm() {
     this.isDisabled = true;
     this.changesSaved = true;
+    const value = this.taskForm.value;
+    const taskId = this.tasksService.getTask(this.task);
+    this.task = value.taskName;
+    this.tasksService.taskUpdate(taskId, this.task);
   }
 
   onTaskEdit() {
@@ -28,7 +35,7 @@ export class TaskComponent implements OnInit {
   }
 
   onTaskDelete() {
-    const id = this.tasksService.getMeal(this.task);
+    const id = this.tasksService.getTask(this.task);
     this.tasksService.deleteTask(id);
   }
 }

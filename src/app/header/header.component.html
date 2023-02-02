@@ -1,0 +1,20 @@
+<header class="header">
+  <div class="header__logo">
+    <h1 class="header__heading">To-Do App</h1>
+  </div>
+  <nav class="header__nav">
+    <form class="header__form" #f="ngForm">
+      <div class="header__form__inputs">
+        <input required type="text" name="task" ngModel />
+        <button
+          (click)="onTaskAdd()"
+          type="submit"
+          class="button-add"
+          [disabled]="!form.dirty"
+        >
+          +
+        </button>
+      </div>
+    </form>
+  </nav>
+</header>
